@@ -1,6 +1,10 @@
 .idea/
 .git/
-vendor/
-.phpunit*
-.phpunit.result.cache
-coverage
+/vendor/
+/runtime/
+/.phpunit*
+/.phpunit.result.cache
+/coverage
+/.env
+/storage
+/public/http.json

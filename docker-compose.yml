@@ -1,0 +1,38 @@
+version: '3.7'
+
+services:
+  trade-platform:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: trade-platform
+    ports:
+      - "80:80"
+      - "8080:8080"
+    volumes:
+      - ./:/opt/www
+    depends_on:
+      - trade-platform-db
+      - trade-platform-cache
+    links:
+      - trade-platform-db
+      - trade-platform-cache
+  trade-platform-db:
+    image: mysql
+    container_name: trade-platform-db
+    ports:
+      - '3306:3306'
+    environment:
+      MYSQL_ROOT_PASSWORD: 'secret'
+      MYSQL_DATABASE: 'trade_platform'
+  trade-platform-cache:
+    image: redis:7.2
+    container_name: trade-platform-cache
+    ports:
+      - '6379:6379'
+    volumes:
+      - redis_data:/data
+
+volumes:
+  redis_data:
+    driver: local
